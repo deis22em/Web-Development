@@ -1,7 +1,6 @@
 const API_URL = "http://localhost:3000/api/products";
 
-// ✅ Function to fetch all products
-function fetchProducts() {
+function getEmProducts() {
   fetch(API_URL)
     .then((response) => response.json())
     .then((data) => {
@@ -16,7 +15,7 @@ function fetchProducts() {
     .catch((error) => console.error("Error fetching products:", error));
 }
 
-// ✅ Function to add a new product
+
 function addProduct() {
   let name = document.getElementById("productName").value;
   let price = document.getElementById("productPrice").value;
@@ -39,16 +38,15 @@ function addProduct() {
     .then((response) => response.json())
     .then((data) => {
       document.getElementById("addMessage").textContent = data.message;
-      fetchProducts(); // Refresh product list
+      getEmProducts(); 
     })
-    .catch((error) => console.error("Error adding product:", error));
+    .catch((error) => console.error("There was an error adding a product:", error));
 }
 
 /////////////////////////////////////////////////////////////
 // const API_URL = "http://localhost:3000/api/products";
 
-// // ✅ Function to fetch all products
-// function fetchProducts() {
+// function getEmProducts() {
 //   fetch(API_URL)
 //     .then((response) => response.json())
 //     .then((data) => {
@@ -63,14 +61,13 @@ function addProduct() {
 //     .catch((error) => console.error("Error fetching products:", error));
 // }
 
-// // ✅ Function to update a product
 // function updateProduct() {
 //   let id = document.getElementById("updateProductId").value;
 //   let name = document.getElementById("updateProductName").value;
 //   let price = document.getElementById("updateProductPrice").value;
 
 //   if (!id) {
-//     document.getElementById("updateMessage").textContent = "Enter product ID!";
+//     document.getElementById("updateMessage").textContent = "Enter a product ID";
 //     return;
 //   }
 
@@ -88,7 +85,7 @@ function addProduct() {
 //     .then((response) => response.json())
 //     .then((data) => {
 //       document.getElementById("updateMessage").textContent = data.message;
-//       fetchProducts(); // Refresh product list
+//       getEmProducts(); // Refresh product list
 //     })
 //     .catch((error) => console.error("Error updating product:", error));
 // }

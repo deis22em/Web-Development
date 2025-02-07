@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Stylish Toggle Visibility</title>
+    <title>Button</title>
     <style>
       * {
         margin: 0;
@@ -22,7 +22,7 @@
         flex-direction: column;
       }
 
-      .dark-mode {
+      .change-background {
         background-color: #48b9a8; /* New background when toggled */
         color: white;
       }
@@ -67,7 +67,7 @@
       const body = document.body;
 
       button.addEventListener("click", () => {
-        body.classList.toggle("dark-mode");
+        body.classList.toggle("change-background");
         text.classList.toggle("hidden");
         button.textContent = text.classList.contains("hidden")
           ? "Show Text"

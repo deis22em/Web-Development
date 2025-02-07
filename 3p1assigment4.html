@@ -3,20 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fetch JSON Countries</title>
+    <title>Countries</title>
     <style>
       body {
         font-family: Arial, sans-serif;
         text-align: center;
         margin: 20px;
-        background-color: #f4f4f4;
+        background-color: #f4908a;
       }
       ul {
         list-style-type: none;
         padding: 0;
       }
       li {
-        background: white;
+        background: #48b9a8;
         margin: 5px;
         padding: 10px;
         border-radius: 5px;
@@ -25,7 +25,7 @@
     </style>
   </head>
   <body>
-    <h2>List of Countries</h2>
+    <h2>Countries</h2>
     <ul id="countryList"></ul>
 
     <script>
@@ -35,7 +35,7 @@
       fetch(url)
         .then((response) => {
           if (!response.ok) {
-            throw new Error("Network response was not ok");
+            throw new Error("Not ok");
           }
           return response.json();
         })
@@ -48,7 +48,7 @@
           });
         })
         .catch((error) => {
-          console.error("Error fetching countries:", error);
+          console.error("Error", error);
         });
     </script>
   </body>

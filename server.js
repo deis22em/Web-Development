@@ -9,8 +9,10 @@ app.use(express.json()); // Enable JSON body parsing
 
 // Global product array
 let products = [
-  { id: 1, name: "Apple", price: 1000 },
-  { id: 2, name: "Phone", price: 500 },
+  { id: 1, name: "Apple", price: 5 },
+  { id: 2, name: "Orange", price: 7 },
+  { id: 3, name: "Banana", price: 10 },
+  { id: 4, name: "Grapes", price: 55 },
 ];
 
 // Route to get all products
@@ -24,7 +26,7 @@ app.get("/api/products/:id", (req, res) => {
   const product = products.find((p) => p.id === productId);
 
   if (!product) {
-    return res.status(404).json({ message: "Product not found" });
+    return res.status(404).json({ message: "Product cant be found" });
   }
 
   res.json(product);
@@ -36,7 +38,7 @@ app.post("/api/products", (req, res) => {
 
   // Validate input
   if (!name || !price) {
-    return res.status(400).json({ message: "Name and price are required" });
+    return res.status(400).json({ message: "You need to add a name and a price" });
   }
 
   // Create new product object
@@ -51,7 +53,7 @@ app.post("/api/products", (req, res) => {
 
   // Return success message
   res.status(201).json({
-    message: "Product added successfully",
+    message: "Product has been added",
     product: newProduct,
   });
 });

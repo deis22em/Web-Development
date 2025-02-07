@@ -1,0 +1,334 @@
+//------------------1p1  Assignment 10------------------
+                        MADE IN HTML:
+
+
+
+//------------------1p2  Assignment 7------------------
+                        MADE IN HTML:
+
+
+
+//------------------1p2  Assignment 6------------------
+                        MADE IN HTML:
+
+
+
+//------------------2p1  Assignment  7------------------
+                        MADE IN HTML:
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Count Child Elements</title>
+  </head>
+  <body>
+    <ul id="myList">
+      <li id="item1">Item 1</li>
+      <li id="item2">Item 2</li>
+      <li id="item3">Item 3</li>
+      <li id="item4">Item 4</li>
+      <li id="item5">Item 5</li>
+    </ul>
+
+    <script>
+      // Get the <ul> element
+      const list = document.getElementById("myList");
+
+      // Count number of <li> elements
+      const itemCount = list.children.length;
+
+      // Get all IDs of <li> elements
+      const itemIds = Array.from(list.children).map((li) => li.id);
+
+      // Log results
+      console.log("Total <li> elements:", itemCount);
+      console.log("List of IDs:", itemIds);
+    </script>
+  </body>
+</html>
+
+
+//------------------2p2 Assignment 6------------------
+                        MADE IN HTML:
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Button</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #baf1e4;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh; /* Full screen height */
+        transition: background-color 0.5s ease-in-out;
+        flex-direction: column;
+      }
+
+      .change-background {
+        background-color: #48b9a8; /* New background when toggled */
+        color: white;
+      }
+
+      .toggle-btn {
+        background: linear-gradient(45deg, #fc6c8c, #fa3c5a);
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        font-size: 18px;
+        cursor: pointer;
+        border-radius: 8px;
+        transition: 0.3s ease-in-out;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      }
+
+      .toggle-btn:hover {
+        background: linear-gradient(45deg, #f4908a, #fc6c8c);
+        transform: scale(1.05);
+      }
+
+      .text {
+        font-size: 20px;
+        margin-top: 20px;
+        opacity: 1;
+        transition: opacity 0.5s ease-in-out;
+      }
+
+      .hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="toggleBtn" class="toggle-btn">Show Text</button>
+    <p id="text" class="text hidden">✨ Here is some text ✨</p>
+
+    <script>
+      const button = document.getElementById("toggleBtn");
+      const text = document.getElementById("text");
+      const body = document.body;
+
+      button.addEventListener("click", () => {
+        body.classList.toggle("change-background");
+        text.classList.toggle("hidden");
+        button.textContent = text.classList.contains("hidden")
+          ? "Show Text"
+          : "Hide Text";
+      });
+    </script>
+  </body>
+</html>
+
+
+//------------------3p1Assignment 4------------------
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Countries</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin: 20px;
+        background-color: #f4908a;
+      }
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+      li {
+        background: #48b9a8;
+        margin: 5px;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Countries</h2>
+    <ul id="countryList"></ul>
+
+    <script>
+      const url =
+        "https://gist.githubusercontent.com/mapoto/515827c73f7f60a14cf2914f0cca16f0/raw/c41bc850bc989cadf6a1caa394ab12fce105d59e/countries.json";
+
+      fetch(url)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Not ok");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          const countryList = document.getElementById("countryList");
+          data.forEach((country) => {
+            const listItem = document.createElement("li");
+            listItem.textContent = country.name;
+            countryList.appendChild(listItem);
+          });
+        })
+        .catch((error) => {
+          console.error("Error", error);
+        });
+    </script>
+  </body>
+</html>
+
+
+//------------------3p2 Assignment 4------------------
+                    HTML (index.html):
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Products</title>
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <h1>Product</h1>
+
+    <h2>Get All Products</h2>
+    <button onclick="fetchProducts()">Get Products</button>
+    <ul id="productList"></ul>
+
+    <h2>Add</h2>
+    <input type="text" id="productName" placeholder="Enter Product Name" />
+    <input type="number" id="productPrice" placeholder="Enter Product Price" />
+    <button onclick="addProduct()">Add product</button>
+    <p id="addMessage"></p>
+  </body>
+</html>
+
+                    JS FILE (scipt.js):
+const API_URL = "http://localhost:3000/api/products";
+
+function getEmProducts() {
+  fetch(API_URL)
+    .then((response) => response.json())
+    .then((data) => {
+      let productList = document.getElementById("productList");
+      productList.innerHTML = "";
+      data.forEach((product) => {
+        let li = document.createElement("li");
+        li.textContent = `${product.name} - $${product.price}`;
+        productList.appendChild(li);
+      });
+    })
+    .catch((error) => console.error("Error fetching products:", error));
+}
+
+
+function addProduct() {
+  let name = document.getElementById("productName").value;
+  let price = document.getElementById("productPrice").value;
+
+  if (!name || !price) {
+    document.getElementById("addMessage").textContent =
+      "Please enter name and price!";
+    return;
+  }
+
+  let newProduct = { name, price: parseFloat(price) };
+
+  fetch(API_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(newProduct),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      document.getElementById("addMessage").textContent = data.message;
+      getEmProducts(); 
+    })
+    .catch((error) => console.error("There was an error adding a product:", error));
+}
+
+                    JS FILE (server.js):
+const express = require("express");
+const cors = require("cors");
+
+const app = express();
+const PORT = 3000;
+
+app.use(cors()); // Allow client-side requests
+app.use(express.json()); // Enable JSON body parsing
+
+// Global product array
+let products = [
+  { id: 1, name: "Apple", price: 5 },
+  { id: 2, name: "Orange", price: 7 },
+  { id: 3, name: "Banana", price: 10 },
+  { id: 4, name: "Grapes", price: 55 },
+];
+
+// Route to get all products
+app.get("/api/products", (req, res) => {
+  res.json(products);
+});
+
+// Route to get a product by ID
+app.get("/api/products/:id", (req, res) => {
+  const productId = parseInt(req.params.id);
+  const product = products.find((p) => p.id === productId);
+
+  if (!product) {
+    return res.status(404).json({ message: "Product cant be found" });
+  }
+
+  res.json(product);
+});
+
+// Route to add a new product
+app.post("/api/products", (req, res) => {
+  const { name, price } = req.body;
+
+  // Validate input
+  if (!name || !price) {
+    return res.status(400).json({ message: "You need to add a name and a price" });
+  }
+
+  // Create new product object
+  const newProduct = {
+    id: products.length + 1, // Auto-increment ID
+    name,
+    price,
+  };
+
+  // Add the new product to the products array
+  products.push(newProduct);
+
+  // Return success message
+  res.status(201).json({
+    message: "Product has been added",
+    product: newProduct,
+  });
+});
+
+// Start the server
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});
+
+
+//------------------3p1Assignment 4------------------
+
+
+                    JS FILE (server.js):
