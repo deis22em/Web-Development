@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stylish Toggle Visibility</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #baf1e4;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh; /* Full screen height */
+        transition: background-color 0.5s ease-in-out;
+        flex-direction: column;
+      }
+
+      .dark-mode {
+        background-color: #48b9a8; /* New background when toggled */
+        color: white;
+      }
+
+      .toggle-btn {
+        background: linear-gradient(45deg, #fc6c8c, #fa3c5a);
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        font-size: 18px;
+        cursor: pointer;
+        border-radius: 8px;
+        transition: 0.3s ease-in-out;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      }
+
+      .toggle-btn:hover {
+        background: linear-gradient(45deg, #f4908a, #fc6c8c);
+        transform: scale(1.05);
+      }
+
+      .text {
+        font-size: 20px;
+        margin-top: 20px;
+        opacity: 1;
+        transition: opacity 0.5s ease-in-out;
+      }
+
+      .hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="toggleBtn" class="toggle-btn">Show Text</button>
+    <p id="text" class="text hidden">✨ Here is some text ✨</p>
+
+    <script>
+      const button = document.getElementById("toggleBtn");
+      const text = document.getElementById("text");
+      const body = document.body;
+
+      button.addEventListener("click", () => {
+        body.classList.toggle("dark-mode");
+        text.classList.toggle("hidden");
+        button.textContent = text.classList.contains("hidden")
+          ? "Show Text"
+          : "Hide Text";
+      });
+    </script>
+  </body>
+</html>

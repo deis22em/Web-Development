@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Management</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin: 20px;
+      }
+      input,
+      button {
+        margin: 5px;
+        padding: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Update Product</h2>
+    <input type="number" id="updateId" placeholder="Product ID" />
+    <input type="text" id="updateName" placeholder="New Name" />
+    <input type="number" id="updatePrice" placeholder="New Price" />
+    <button onclick="updateProduct()">Update</button>
+
+    <h2>Delete Product</h2>
+    <input type="number" id="deleteId" placeholder="Product ID" />
+    <button onclick="deleteProduct()">Delete</button>
+
+    <script>
+      const API_URL = "http://localhost:3000/api/products";
+
+      // 🛠 Update Product (PUT request)
+      function updateProduct() {
+        const id = document.getElementById("updateId").value;
+        const name = document.getElementById("updateName").value;
+        const price = document.getElementById("updatePrice").value;
+
+        fetch(`${API_URL}/${id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, price }),
+        })
+          .then((res) => res.json())
+          .then((data) => alert(data.message))
+          .catch((error) => console.error("Error:", error));
+      }
+
+      // ❌ Delete Product (DELETE request)
+      function deleteProduct() {
+        const id = document.getElementById("deleteId").value;
+
+        fetch(`${API_URL}/${id}`, {
+          method: "DELETE",
+        })
+          .then((res) => res.json())
+          .then((data) => alert(data.message))
+          .catch((error) => console.error("Error:", error));
+      }
+    </script>
+  </body>
+</html>

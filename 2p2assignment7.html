@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Count Child Elements</title>
+  </head>
+  <body>
+    <ul id="myList">
+      <li id="item1">Item 1</li>
+      <li id="item2">Item 2</li>
+      <li id="item3">Item 3</li>
+      <li id="item4">Item 4</li>
+      <li id="item5">Item 5</li>
+    </ul>
+
+    <script>
+      // Get the <ul> element
+      const list = document.getElementById("myList");
+
+      // Count number of <li> elements
+      const itemCount = list.children.length;
+
+      // Get all IDs of <li> elements
+      const itemIds = Array.from(list.children).map((li) => li.id);
+
+      // Log results
+      console.log("Total <li> elements:", itemCount);
+      console.log("List of IDs:", itemIds);
+    </script>
+  </body>
+</html>
