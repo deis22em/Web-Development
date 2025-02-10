@@ -1,17 +1,52 @@
 //------------------1p1  Assignment 10------------------
-                        MADE IN HTML:
+class Rectangle {
+  constructor(width, height) {
+    this.width = width;
+    this.height = height;
+  }
 
+  getArea() {
+    return this.width * this.height;
+  }
+
+  static isSquare(rectangle) {
+    return rectangle.width === rectangle.height;
+  }
+}
+
+const rect = new Rectangle(100, 300);
+console.log("Area of rectangle:", rect.getArea());
+console.log("Is rectangle a square?", Rectangle.isSquare(rect));
+
+const square = new Rectangle(10, 10);
+console.log("Area of rectangle:", square.getArea());
+console.log("Is rectangle a square?", Rectangle.isSquare(square));
 
 
 //------------------1p2  Assignment 7------------------
                         MADE IN HTML:
 
+const users = [
+  { id: 1, name: "Alice" },
+  { id: 2, name: "Bob" },
+  { id: 3, name: "Charlie" },
+];
+
+const userName = users.map((user) => user.name);
+
+console.log(userName);
 
 
 //------------------1p2  Assignment 6------------------
-                        MADE IN HTML:
 
+const fruits = ["apple", "banana", "apple", "cherry", "banana", "apple"];
 
+const fruitCount = fruits.reduce((count, fruit) => {
+  count[fruit] = (count[fruit] || 0) + 1;
+  return count;
+}, {});
+
+console.log(fruitCount);
 
 //------------------2p1  Assignment  7------------------
                         MADE IN HTML:
@@ -204,7 +239,7 @@
     <h1>Product</h1>
 
     <h2>Get All Products</h2>
-    <button onclick="fetchProducts()">Get Products</button>
+    <button onclick="getEmProducts()">Get Them Products</button>
     <ul id="productList"></ul>
 
     <h2>Add</h2>
@@ -329,6 +364,122 @@ app.listen(PORT, () => {
 
 
 //------------------3p1Assignment 4------------------
+                    HTML (index.html):
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Products</title>
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <h1>Products</h1>
+
+    <h2>Get Them Products</h2>
+    <button onclick="getEmProducts()">Get Them Products</button>
+    <ul id="productList"></ul>
+
+    <h2>Update</h2>
+    <input type="number" id="updateProductId" placeholder="Enter Product ID" />
+    <input type="text" id="updateProductName" placeholder="New Name" />
+    <input type="number" id="updateProductPrice" placeholder="New Price" />
+    <button onclick="updateProduct()">Update</button>
+    <p id="updateMessage"></p>
+  </body>
+</html>
+
+                    JS FILE (script.js):
+const API_URL = "http://localhost:3000/api/products";
+
+function getEmProducts() {
+  fetch(API_URL)
+    .then((response) => response.json())
+    .then((data) => {
+      let productList = document.getElementById("productList");
+      productList.innerHTML = "";
+      data.forEach((product) => {
+        let li = document.createElement("li");
+        li.textContent = `ID: ${product.id}, ${product.name} - $${product.price}`;
+        productList.appendChild(li);
+      });
+    })
+    .catch((error) => console.error("Error fetching products:", error));
+}
+
+function updateProduct() {
+  let id = document.getElementById("updateProductId").value;
+  let name = document.getElementById("updateProductName").value;
+  let price = document.getElementById("updateProductPrice").value;
+
+  if (!id) {
+    document.getElementById("updateMessage").textContent = "Enter a product ID";
+    return;
+  }
+
+  let updatedProduct = {};
+  if (name) updatedProduct.name = name;
+  if (price) updatedProduct.price = parseFloat(price);
+
+  fetch(`${API_URL}/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(updatedProduct),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      document.getElementById("updateMessage").textContent = data.message;
+      getEmProducts(); // Refresh product list
+    })
+    .catch((error) => console.error("Error updating product:", error));
+}
+
 
 
                     JS FILE (server.js):
+const express = require("express");
+const cors = require("cors");
+
+const app = express();
+const PORT = 3000;
+
+app.use(cors());
+app.use(express.json());
+app.use(express.static("public"));
+
+let products = [
+  { id: 1, name: "Mascara", price: 100 },
+  { id: 2, name: "Lipstick", price: 200 },
+  { id: 3, name: "Rouge", price: 200 },
+  { id: 4, name: "Foundation", price: 500 },
+];
+
+app.get("/api/products", (req, res) => {
+  res.json(products);
+});
+
+app.put("/api/products/:id", (req, res) => {
+  const productId = parseInt(req.params.id);
+  const { name, price } = req.body;
+
+  const productIndex = products.findIndex((p) => p.id === productId);
+  if (productIndex === -1) {
+    return res.status(404).json({ message: "Product not found" });
+  }
+
+  products[productIndex] = {
+    name: name || products[productIndex].name,
+    price: price || products[productIndex].price,
+  };
+
+  res.json({
+    message: "Product updated successfully!",
+    product: products[productIndex],
+  });
+});
+
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});
